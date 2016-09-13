@@ -6,8 +6,9 @@
 //
 
 #import "JTCalendarDayView.h"
-
 #import "JTCalendarManager.h"
+#import "ACLabel.h"
+#import "UIFont+Additions.h"
 
 @implementation JTCalendarDayView
 
@@ -65,14 +66,22 @@
     }
     
     {
-        _textLabel = [UILabel new];
+        _textLabel = [[ACLabel alloc] init];
         [self addSubview:_textLabel];
         
         _textLabel.textColor = [UIColor blackColor];
         _textLabel.textAlignment = NSTextAlignmentCenter;
-        _textLabel.font = [UIFont systemFontOfSize:[UIFont systemFontSize]];
+        _textLabel.font = [UIFont aussieCommerceFontWithSize:[UIFont systemFontSize]];
+
+        _textLabelSmall = [[ACLabel alloc] init];
+        [self addSubview:_textLabelSmall];
+      
+        _textLabelSmall.textColor = [UIColor blackColor];
+        _textLabelSmall.textAlignment = NSTextAlignmentCenter;
+        _textLabelSmall.font = [UIFont aussieCommerceFontWithSize:8.0f];
+
     }
-    
+  
     {
         UITapGestureRecognizer *gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTouch)];
         
@@ -86,6 +95,7 @@
     [super layoutSubviews];
     
     _textLabel.frame = self.bounds;
+    _textLabelSmall.frame = CGRectOffset(self.bounds, 0, 12.0f);
     
     CGFloat sizeCircle = MIN(self.frame.size.width, self.frame.size.height);
     CGFloat sizeDot = sizeCircle;
