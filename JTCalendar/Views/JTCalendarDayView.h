@@ -30,4 +30,12 @@
  */
 - (void)commonInit;
 
+/*
+ * Mask the left side of the cell to make half a circle
+ */
+-(void)maskLeft;
+/*
+ * Mask the right side of the cell to make half a circle
+ */
+-(void)maskRight;
 @end

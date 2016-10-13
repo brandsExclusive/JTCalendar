@@ -49,7 +49,7 @@
         
         _circleView.backgroundColor = [UIColor colorWithRed:0x33/256. green:0xB3/256. blue:0xEC/256. alpha:.5];
         _circleView.hidden = YES;
-
+        
         _circleView.layer.rasterizationScale = [UIScreen mainScreen].scale;
         _circleView.layer.shouldRasterize = YES;
     }
@@ -60,7 +60,7 @@
         
         _dotView.backgroundColor = [UIColor redColor];
         _dotView.hidden = YES;
-
+        
         _dotView.layer.rasterizationScale = [UIScreen mainScreen].scale;
         _dotView.layer.shouldRasterize = YES;
     }
@@ -72,16 +72,16 @@
         _textLabel.textColor = [UIColor blackColor];
         _textLabel.textAlignment = NSTextAlignmentCenter;
         _textLabel.font = [UIFont aussieCommerceFontWithSize:[UIFont systemFontSize]];
-
+        
         _textLabelSmall = [[ACLabel alloc] init];
         [self addSubview:_textLabelSmall];
-      
+        
         _textLabelSmall.textColor = [UIColor blackColor];
         _textLabelSmall.textAlignment = NSTextAlignmentCenter;
-        _textLabelSmall.font = [UIFont aussieCommerceFontWithSize:8.0f];
-
+        _textLabelSmall.font = [UIFont aussieCommerceFontBoldWithSize:9];
+        
     }
-  
+    
     {
         UITapGestureRecognizer *gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTouch)];
         
@@ -90,12 +90,44 @@
     }
 }
 
+-(void)maskLeft{
+    
+    CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
+    CGRect maskRect = self.circleView.bounds;
+    CGFloat offset = self.circleView.bounds.size.width/10;
+    maskRect.origin.x = offset;
+    maskRect.size.width = (self.circleView.bounds.size.width+(offset*3));
+    // Create a path with the circle in it.
+    CGPathRef path = CGPathCreateWithRoundedRect(maskRect, maskRect.size.width/3, maskRect.size.height/2, NULL);
+    // Set the path to the mask layer.
+    maskLayer.path = path;
+    // Set the mask of the view.
+    self.circleView.layer.mask = maskLayer;
+}
+
+
+
+-(void)maskRight{
+    
+    CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
+    CGRect maskRect = self.circleView.bounds;
+    CGFloat offset = self.circleView.bounds.size.width/10;
+    maskRect.origin.x = -offset*4;
+    maskRect.size.width = (self.circleView.bounds.size.width+(offset*3));
+    // Create a path with the circle in it.
+    CGPathRef path = CGPathCreateWithRoundedRect(maskRect, maskRect.size.width/3, maskRect.size.height/2, NULL);
+    // Set the path to the mask layer.
+    maskLayer.path = path;
+    // Set the mask of the view.
+    self.circleView.layer.mask = maskLayer;
+}
+
 - (void)layoutSubviews
 {
     [super layoutSubviews];
     
     _textLabel.frame = self.bounds;
-    _textLabelSmall.frame = CGRectOffset(self.bounds, 0, 12.0f);
+    _textLabelSmall.frame = CGRectOffset(self.bounds, 0, 15.0f);
     
     CGFloat sizeCircle = MIN(self.frame.size.width, self.frame.size.height);
     CGFloat sizeDot = sizeCircle;
@@ -106,9 +138,8 @@
     sizeCircle = roundf(sizeCircle);
     sizeDot = roundf(sizeDot);
     
-    _circleView.frame = CGRectMake(0, 0, sizeCircle, sizeCircle);
+    _circleView.frame = CGRectMake(0, 0, self.bounds.size.width,(self.bounds.size.height/5)*3);
     _circleView.center = CGPointMake(self.frame.size.width / 2., self.frame.size.height / 2.);
-    _circleView.layer.cornerRadius = sizeCircle / 2.;
     
     _dotView.frame = CGRectMake(0, 0, sizeDot, sizeDot);
     _dotView.center = CGPointMake(self.frame.size.width / 2., (self.frame.size.height / 2.) +sizeDot * 2.5);
@@ -125,14 +156,14 @@
 }
 
 - (void)reload
-{    
+{
     static NSDateFormatter *dateFormatter = nil;
     if(!dateFormatter){
         dateFormatter = [_manager.dateHelper createDateFormatter];
     }
     [dateFormatter setDateFormat:self.dayFormat];
-
-    _textLabel.text = [ dateFormatter stringFromDate:_date];       
+    
+    _textLabel.text = [ dateFormatter stringFromDate:_date];
     [_manager.delegateManager prepareDayView:self];
 }
 
