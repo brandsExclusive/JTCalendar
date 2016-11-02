@@ -91,35 +91,35 @@
 }
 
 -(void)maskLeft{
-    
-    CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
-    CGRect maskRect = self.circleView.bounds;
-    CGFloat offset = self.circleView.bounds.size.width/10;
-    maskRect.origin.x = offset;
-    maskRect.size.width = (self.circleView.bounds.size.width+(offset*3));
-    // Create a path with the circle in it.
-    CGPathRef path = CGPathCreateWithRoundedRect(maskRect, maskRect.size.width/3, maskRect.size.height/2, NULL);
-    // Set the path to the mask layer.
-    maskLayer.path = path;
-    // Set the mask of the view.
-    self.circleView.layer.mask = maskLayer;
+    if (!CGRectIsEmpty(self.circleView.bounds)){
+        CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
+        CGRect maskRect = self.circleView.bounds;
+        CGFloat offset = self.circleView.bounds.size.width/10;
+        maskRect.origin.x = offset;
+        maskRect.size.width = (self.circleView.bounds.size.width+(offset*3));
+        // Create a path with the circle in it.
+        CGPathRef path = CGPathCreateWithRoundedRect(maskRect, maskRect.size.width/3, maskRect.size.height/2, NULL);
+        // Set the path to the mask layer.
+        maskLayer.path = path;
+        // Set the mask of the view.
+        self.circleView.layer.mask = maskLayer;
+    }
 }
 
-
-
 -(void)maskRight{
-    
-    CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
-    CGRect maskRect = self.circleView.bounds;
-    CGFloat offset = self.circleView.bounds.size.width/10;
-    maskRect.origin.x = -offset*4;
-    maskRect.size.width = (self.circleView.bounds.size.width+(offset*3));
-    // Create a path with the circle in it.
-    CGPathRef path = CGPathCreateWithRoundedRect(maskRect, maskRect.size.width/3, maskRect.size.height/2, NULL);
-    // Set the path to the mask layer.
-    maskLayer.path = path;
-    // Set the mask of the view.
-    self.circleView.layer.mask = maskLayer;
+    if (!CGRectIsEmpty(self.circleView.bounds)){
+        CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
+        CGRect maskRect = self.circleView.bounds;
+        CGFloat offset = self.circleView.bounds.size.width/10;
+        maskRect.origin.x = -offset*4;
+        maskRect.size.width = (self.circleView.bounds.size.width+(offset*3));
+        // Create a path with the circle in it.
+        CGPathRef path = CGPathCreateWithRoundedRect(maskRect, maskRect.size.width/3, maskRect.size.height/2, NULL);
+        // Set the path to the mask layer.
+        maskLayer.path = path;
+        // Set the mask of the view.
+        self.circleView.layer.mask = maskLayer;
+    }
 }
 
 - (void)layoutSubviews
