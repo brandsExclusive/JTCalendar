@@ -31,9 +31,14 @@
 - (void)commonInit;
 
 /*
- * Mask the left side of the cell to make half a circle
+ * Mask the left,right full or none
  */
+@property (nonatomic, strong) UIColor *maskColor;
 -(void)maskLeft;
+-(void)maskRight;
+-(void)mask;
+-(void)maskNone;
+
 /*
  * Mask the right side of the cell to make half a circle
  */

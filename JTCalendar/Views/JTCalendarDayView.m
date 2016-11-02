@@ -7,8 +7,8 @@
 
 #import "JTCalendarDayView.h"
 #import "JTCalendarManager.h"
-#import "ACLabel.h"
 #import "UIFont+Additions.h"
+#import "ACLabel.h"
 
 @implementation JTCalendarDayView
 
@@ -72,16 +72,18 @@
         _textLabel.textColor = [UIColor blackColor];
         _textLabel.textAlignment = NSTextAlignmentCenter;
         _textLabel.font = [UIFont aussieCommerceFontWithSize:[UIFont systemFontSize]];
-        
+      
+    }
+    {
         _textLabelSmall = [[ACLabel alloc] init];
         [self addSubview:_textLabelSmall];
-        
+  
         _textLabelSmall.textColor = [UIColor blackColor];
         _textLabelSmall.textAlignment = NSTextAlignmentCenter;
         _textLabelSmall.font = [UIFont aussieCommerceFontBoldWithSize:9];
-        
     }
-    
+
+  
     {
         UITapGestureRecognizer *gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTouch)];
         
@@ -89,37 +91,43 @@
         [self addGestureRecognizer:gesture];
     }
 }
-
+- (void)drawMask:(BOOL)left{
+  if (!CGRectIsEmpty(self.circleView.bounds)){
+    CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
+    CGRect maskRect = self.circleView.bounds;
+    CGFloat offset = self.circleView.bounds.size.width/10;
+    maskRect.origin.x = left ? offset : -offset*4;
+    maskRect.size.width = (self.circleView.bounds.size.width+(offset*3));
+    // Create a path with the circle in it.
+    CGPathRef path = CGPathCreateWithRoundedRect(maskRect, maskRect.size.width/3, maskRect.size.height/2, NULL);
+    // Set the path to the mask layer.
+    maskLayer.path = path;
+    // Set the mask of the view.
+    self.circleView.layer.mask = maskLayer;
+  }
+}
 -(void)maskLeft{
-    if (!CGRectIsEmpty(self.circleView.bounds)){
-        CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
-        CGRect maskRect = self.circleView.bounds;
-        CGFloat offset = self.circleView.bounds.size.width/10;
-        maskRect.origin.x = offset;
-        maskRect.size.width = (self.circleView.bounds.size.width+(offset*3));
-        // Create a path with the circle in it.
-        CGPathRef path = CGPathCreateWithRoundedRect(maskRect, maskRect.size.width/3, maskRect.size.height/2, NULL);
-        // Set the path to the mask layer.
-        maskLayer.path = path;
-        // Set the mask of the view.
-        self.circleView.layer.mask = maskLayer;
-    }
+  self.circleView.backgroundColor = self.maskColor;
+  self.circleView.layer.mask = nil;
+  self.circleView.hidden = NO;
+  [self drawMask:YES];
 }
 
 -(void)maskRight{
-    if (!CGRectIsEmpty(self.circleView.bounds)){
-        CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
-        CGRect maskRect = self.circleView.bounds;
-        CGFloat offset = self.circleView.bounds.size.width/10;
-        maskRect.origin.x = -offset*4;
-        maskRect.size.width = (self.circleView.bounds.size.width+(offset*3));
-        // Create a path with the circle in it.
-        CGPathRef path = CGPathCreateWithRoundedRect(maskRect, maskRect.size.width/3, maskRect.size.height/2, NULL);
-        // Set the path to the mask layer.
-        maskLayer.path = path;
-        // Set the mask of the view.
-        self.circleView.layer.mask = maskLayer;
-    }
+  self.circleView.backgroundColor = self.maskColor;
+  self.circleView.layer.mask = nil;
+  self.circleView.hidden = NO;
+  [self drawMask:NO];
+}
+- (void)mask{
+  self.circleView.backgroundColor = self.maskColor;
+  self.circleView.layer.mask = nil;
+  self.circleView.hidden = NO;
+}
+- (void)maskNone{
+  self.circleView.backgroundColor = self.maskColor;
+  self.circleView.layer.mask = nil;
+  self.circleView.hidden = YES;
 }
 
 - (void)layoutSubviews
@@ -137,7 +145,7 @@
     
     sizeCircle = roundf(sizeCircle);
     sizeDot = roundf(sizeDot);
-    
+  
     _circleView.frame = CGRectMake(0, 0, self.bounds.size.width,(self.bounds.size.height/5)*3);
     _circleView.center = CGPointMake(self.frame.size.width / 2., self.frame.size.height / 2.);
     
