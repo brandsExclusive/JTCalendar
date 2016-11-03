@@ -99,7 +99,7 @@
     maskRect.origin.x = left ? offset : -offset*4;
     maskRect.size.width = (self.circleView.bounds.size.width+(offset*3));
     // Create a path with the circle in it.
-    CGPathRef path = CGPathCreateWithRoundedRect(maskRect, maskRect.size.width/3, maskRect.size.height/2, NULL);
+    CGPathRef path = CGPathCreateWithRoundedRect(maskRect,4,4, NULL);
     // Set the path to the mask layer.
     maskLayer.path = path;
     // Set the mask of the view.
