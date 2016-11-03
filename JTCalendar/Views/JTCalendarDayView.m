@@ -146,7 +146,8 @@
     sizeCircle = roundf(sizeCircle);
     sizeDot = roundf(sizeDot);
   
-    _circleView.frame = CGRectMake(0, 0, self.bounds.size.width,(self.bounds.size.height/5)*3);
+//    _circleView.frame = CGRectMake(0, 0, self.bounds.size.width,(self.bounds.size.height/5)*3);
+    _circleView.frame = CGRectMake(0, 0, self.bounds.size.width,self.bounds.size.height * .8);
     _circleView.center = CGPointMake(self.frame.size.width / 2., self.frame.size.height / 2.);
     
     _dotView.frame = CGRectMake(0, 0, sizeDot, sizeDot);
