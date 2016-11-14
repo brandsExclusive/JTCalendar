@@ -7,8 +7,6 @@
 
 #import "JTCalendarDayView.h"
 #import "JTCalendarManager.h"
-#import "UIFont+Additions.h"
-#import "ACLabel.h"
 
 @implementation JTCalendarDayView
 
@@ -66,21 +64,21 @@
     }
     
     {
-        _textLabel = [[ACLabel alloc] init];
+        _textLabel = [[UILabel alloc] init];
         [self addSubview:_textLabel];
         
         _textLabel.textColor = [UIColor blackColor];
         _textLabel.textAlignment = NSTextAlignmentCenter;
-        _textLabel.font = [UIFont aussieCommerceFontWithSize:[UIFont systemFontSize]];
+//        _textLabel.font = [UIFont aussieCommerceFontWithSize:[UIFont systemFontSize]];
       
     }
     {
-        _textLabelSmall = [[ACLabel alloc] init];
+        _textLabelSmall = [[UILabel alloc] init];
         [self addSubview:_textLabelSmall];
   
         _textLabelSmall.textColor = [UIColor blackColor];
         _textLabelSmall.textAlignment = NSTextAlignmentCenter;
-        _textLabelSmall.font = [UIFont aussieCommerceFontBoldWithSize:9];
+//        _textLabelSmall.font = [UIFont aussieCommerceFontBoldWithSize:9];
     }
 
   
